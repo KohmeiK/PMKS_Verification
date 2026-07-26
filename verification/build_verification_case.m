@@ -12,6 +12,14 @@ switch char(caseName)
         Mechanism = buildTeachingSliderCrank();
     case 'slider_crank_tracer'
         Mechanism = buildSliderCrankTracer();
+    case 'angled_slider_crank'
+        Mechanism = buildAngledSliderCrank();
+    case 'steep_slider_crank'
+        Mechanism = buildSteepSliderCrank();
+    case 'offset_slider_crank'
+        Mechanism = buildOffsetSliderCrank();
+    case 'rocking_slider_crank'
+        Mechanism = buildRockingSliderCrank();
     otherwise
         error('Verification:UnknownCase', 'Unknown verification case: %s', caseName);
 end
@@ -135,4 +143,101 @@ end
 
 function value = angleVector(point, anchor)
 value = [0, 0, rad2deg(atan2(point(2) - anchor(2), point(1) - anchor(1)))];
+end
+
+function Mechanism = buildAngledSliderCrank()
+% The slider-crank tracer geometry, rigidly rotated onto a 30 degree guide.
+%
+% Every other v1 slider case runs on a horizontal track, so nothing covered a
+% guide that is not axis-aligned - which is exactly the path a slope-intercept
+% circle-line solve gets wrong as the track steepens. Rotating a geometry that is
+% already known to close keeps the linkage well conditioned, so any disagreement
+% is attributable to the guide orientation rather than to a new mechanism.
+guide = deg2rad(30);
+rotation = [cos(guide), -sin(guide); sin(guide), cos(guide)];
+place = @(point) [(rotation * point(:))', 0];
+
+A = place([0; 0]);
+B = place([4; 2]);
+C = place([12; 0]);
+D = place([20; 2]);
+
+Mechanism = baseMechanism(struct('A', A, 'B', B, 'C', C));
+Mechanism.TracerPoint = struct('D', D);
+Mechanism.LinkCoM.AB = GeneralUtils.determineCoM([A; B]);
+Mechanism.LinkCoM.BCD = GeneralUtils.determineCoM([B; C; D]);
+Mechanism.Mass = struct('AB', 5, 'BCD', 10, 'Piston', 1);
+Mechanism.MassMoI = struct('AB', 0.1, 'BCD', 0.2);
+Mechanism = addLinkAngles(Mechanism, struct('AB', 'A', 'BCD', 'B'));
+end
+
+function Mechanism = buildSteepSliderCrank()
+% The same slider-crank tracer geometry on a guide 0.05 degrees off vertical.
+%
+% angled_slider_crank covers a guide that is merely not axis-aligned. This one
+% covers a guide steep enough to break a slope-intercept consumer: PMKSWeb clamped
+% any slope above 1000 and fell back to holding x constant, which is correct only
+% when the guide is exactly vertical. tan(89.95 deg) is 1145.9, just inside that
+% band. MATLAB solves it cleanly - the guide passes through the origin, so the
+% intercept stays at machine zero.
+guide = deg2rad(89.95);
+rotation = [cos(guide), -sin(guide); sin(guide), cos(guide)];
+place = @(point) [(rotation * point(:))', 0];
+
+A = place([0; 0]);
+B = place([4; 2]);
+C = place([12; 0]);
+D = place([20; 2]);
+
+Mechanism = baseMechanism(struct('A', A, 'B', B, 'C', C));
+Mechanism.TracerPoint = struct('D', D);
+Mechanism.LinkCoM.AB = GeneralUtils.determineCoM([A; B]);
+Mechanism.LinkCoM.BCD = GeneralUtils.determineCoM([B; C; D]);
+Mechanism.Mass = struct('AB', 5, 'BCD', 10, 'Piston', 1);
+Mechanism.MassMoI = struct('AB', 0.1, 'BCD', 0.2);
+Mechanism = addLinkAngles(Mechanism, struct('AB', 'A', 'BCD', 'B'));
+end
+
+function Mechanism = buildOffsetSliderCrank()
+% A slider-crank whose guide does not pass through the crank pivot.
+%
+% Every other v1 slider case is in-line: the guide runs through the pivot, so the
+% two circle-line roots sit symmetrically either side of it and the stroke is
+% centred. Offsetting the guide by 3 units breaks that symmetry - the stroke here
+% runs x = 7.416 to 15.716 - which is the geometry where which root the solver
+% keeps actually distinguishes two different mechanisms.
+A = [0, 0, 0];
+B = [0, 4.0, 0];
+C = [11.958260743101398, 3.0, 0];
+D = [6.0, 7.0, 0];
+
+Mechanism = baseMechanism(struct('A', A, 'B', B, 'C', C));
+Mechanism.TracerPoint = struct('D', D);
+Mechanism.LinkCoM.AB = GeneralUtils.determineCoM([A; B]);
+Mechanism.LinkCoM.BCD = GeneralUtils.determineCoM([B; C; D]);
+Mechanism.Mass = struct('AB', 5, 'BCD', 10, 'Piston', 1);
+Mechanism.MassMoI = struct('AB', 0.1, 'BCD', 0.2);
+Mechanism = addLinkAngles(Mechanism, struct('AB', 'A', 'BCD', 'B'));
+end
+
+function Mechanism = buildRockingSliderCrank()
+% A slider-crank whose crank cannot complete a revolution.
+%
+% Crank 4 plus guide offset 3 exceeds coupler 6, so the slider runs out of reach
+% and the solve reverses - twice, symmetrically. Every other slider case in v1
+% sweeps a full turn in one direction, so branch selection through a reversal on
+% the circle-line path was untested. watt_i and stephenson_iii_example_2 reverse,
+% but neither has a prismatic joint.
+A = [0, 0, 0];
+B = [0, 4.0, 0];
+C = [5.916079783099616, 3.0, 0];
+D = [3.0, 7.0, 0];
+
+Mechanism = baseMechanism(struct('A', A, 'B', B, 'C', C));
+Mechanism.TracerPoint = struct('D', D);
+Mechanism.LinkCoM.AB = GeneralUtils.determineCoM([A; B]);
+Mechanism.LinkCoM.BCD = GeneralUtils.determineCoM([B; C; D]);
+Mechanism.Mass = struct('AB', 5, 'BCD', 10, 'Piston', 1);
+Mechanism.MassMoI = struct('AB', 0.1, 'BCD', 0.2);
+Mechanism = addLinkAngles(Mechanism, struct('AB', 'A', 'BCD', 'B'));
 end

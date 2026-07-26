@@ -111,6 +111,63 @@ switch config.name
             error('Verification:TracerDerivativeRegression', ...
                 'Slider tracer velocity or acceleration regressed to zero.');
         end
+
+    case 'rocking_slider_crank'
+        % The reversal is the point. If a geometry change let the crank turn all
+        % the way round, this would silently become another full-sweep case.
+        if all(diff(sign(Mechanism.inputSpeed(:, 1))) == 0)
+            error('Verification:RockingRegression', ...
+                'Crank completed a revolution; the case no longer reverses.');
+        end
+
+    case 'offset_slider_crank'
+        % The offset is the whole point. Centring the guide on the pivot would
+        % leave a case that still solves while duplicating slider_crank_tracer.
+        travel = Mechanism.Joint.C(:, 1);
+        stroke = max(travel) - min(travel);
+        centre = (max(travel) + min(travel)) / 2;
+        if abs(max(abs(Mechanism.Joint.C(:, 2) - 3))) > 1e-6
+            error('Verification:OffsetGuideRegression', 'Slider left its offset guide.');
+        end
+        if abs(centre) < stroke
+            error('Verification:OffsetGuideRegression', ...
+                'Stroke is centred on the pivot; the guide offset was lost.');
+        end
+
+    case 'steep_slider_crank'
+        % The point of this case is a guide steep enough to break a
+        % slope-intercept consumer. Flattening it would leave a case that still
+        % solves while covering nothing angled_slider_crank does not.
+        guide = deg2rad(89.95);
+        travel = Mechanism.Joint.C(:, 1:2) - Mechanism.Joint.C(1, 1:2);
+        offGuide = travel * [-sin(guide); cos(guide)];
+        along = travel * [cos(guide); sin(guide)];
+        if max(abs(offGuide)) > 1e-6
+            error('Verification:SteepGuideRegression', ...
+                'Slider left its steep guide by %g.', max(abs(offGuide)));
+        end
+        if max(abs(along)) <= 1e-6
+            error('Verification:SteepGuideRegression', ...
+                'Slider did not travel along its guide.');
+        end
+
+    case 'angled_slider_crank'
+        % The entire point of this case is that the guide is not axis-aligned. If
+        % someone quietly reverts the guide angle to 0 it still solves, still
+        % closes, and silently stops covering anything the horizontal cases do not.
+        guide = deg2rad(30);
+        normalDirection = [-sin(guide), cos(guide)];
+        travel = Mechanism.Joint.C(:, 1:2) - Mechanism.Joint.C(1, 1:2);
+        along = travel * [cos(guide); sin(guide)];
+        offGuide = travel * normalDirection';
+        if max(abs(offGuide)) > 1e-6
+            error('Verification:AngledGuideRegression', ...
+                'Slider left its 30 degree guide by %g.', max(abs(offGuide)));
+        end
+        if max(abs(along)) <= 1e-6
+            error('Verification:AngledGuideRegression', ...
+                'Slider did not travel along its guide.');
+        end
 end
 
 if any(diff(sign(Mechanism.inputSpeed(:, 1))) ~= 0)

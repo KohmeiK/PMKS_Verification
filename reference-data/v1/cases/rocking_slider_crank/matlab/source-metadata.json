@@ -1,0 +1,23 @@
+{
+  "numeric_format": "%.17g",
+  "schema_version": 1,
+  "source_content_sha256": "4d8b94f3ad37b6f9fa841996df8c9d52a75c844ddf74a549e195fdd91034cdc0",
+  "source_files": [
+    "CommonUtils/ForceSolverUtils.m",
+    "CommonUtils/GeneralUtils.m",
+    "CommonUtils/PosSolverUtils.m",
+    "CommonUtils/RMSEUtils.m",
+    "CommonUtils/SpeedDetermination.m",
+    "CommonUtils/StressSolverUtils.m",
+    "CommonUtils/VelAccSolverUtils.m",
+    "Mechanisms/Four_Bar_Slider/Rocking_Slider_Crank/PosSolver.m",
+    "Mechanisms/Four_Bar_Slider/Rocking_Slider_Crank/Utils.m",
+    "Mechanisms/Four_Bar_Slider/Rocking_Slider_Crank/VelAccSolver.m",
+    "verification/build_verification_case.m",
+    "verification/export_reference_v1.m",
+    "verification/run_verification.m",
+    "verification/validate_verification_case.m",
+    "verification/verification_case_definition.m"
+  ],
+  "source_repository": "https://github.com/PMKS-Web/PMKS_Verification"
+}
