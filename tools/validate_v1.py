@@ -204,6 +204,7 @@ EXPECTED_CASES = {
     "angled_slider_crank",
     "steep_slider_crank",
     "offset_slider_crank",
+    "rocking_slider_crank",
 }
 
 

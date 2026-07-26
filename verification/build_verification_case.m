@@ -18,6 +18,8 @@ switch char(caseName)
         Mechanism = buildSteepSliderCrank();
     case 'offset_slider_crank'
         Mechanism = buildOffsetSliderCrank();
+    case 'rocking_slider_crank'
+        Mechanism = buildRockingSliderCrank();
     otherwise
         error('Verification:UnknownCase', 'Unknown verification case: %s', caseName);
 end
@@ -208,6 +210,28 @@ A = [0, 0, 0];
 B = [0, 4.0, 0];
 C = [11.958260743101398, 3.0, 0];
 D = [6.0, 7.0, 0];
+
+Mechanism = baseMechanism(struct('A', A, 'B', B, 'C', C));
+Mechanism.TracerPoint = struct('D', D);
+Mechanism.LinkCoM.AB = GeneralUtils.determineCoM([A; B]);
+Mechanism.LinkCoM.BCD = GeneralUtils.determineCoM([B; C; D]);
+Mechanism.Mass = struct('AB', 5, 'BCD', 10, 'Piston', 1);
+Mechanism.MassMoI = struct('AB', 0.1, 'BCD', 0.2);
+Mechanism = addLinkAngles(Mechanism, struct('AB', 'A', 'BCD', 'B'));
+end
+
+function Mechanism = buildRockingSliderCrank()
+% A slider-crank whose crank cannot complete a revolution.
+%
+% Crank 4 plus guide offset 3 exceeds coupler 6, so the slider runs out of reach
+% and the solve reverses - twice, symmetrically. Every other slider case in v1
+% sweeps a full turn in one direction, so branch selection through a reversal on
+% the circle-line path was untested. watt_i and stephenson_iii_example_2 reverse,
+% but neither has a prismatic joint.
+A = [0, 0, 0];
+B = [0, 4.0, 0];
+C = [5.916079783099616, 3.0, 0];
+D = [3.0, 7.0, 0];
 
 Mechanism = baseMechanism(struct('A', A, 'B', B, 'C', C));
 Mechanism.TracerPoint = struct('D', D);

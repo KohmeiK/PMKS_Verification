@@ -112,6 +112,14 @@ switch config.name
                 'Slider tracer velocity or acceleration regressed to zero.');
         end
 
+    case 'rocking_slider_crank'
+        % The reversal is the point. If a geometry change let the crank turn all
+        % the way round, this would silently become another full-sweep case.
+        if all(diff(sign(Mechanism.inputSpeed(:, 1))) == 0)
+            error('Verification:RockingRegression', ...
+                'Crank completed a revolution; the case no longer reverses.');
+        end
+
     case 'offset_slider_crank'
         % The offset is the whole point. Centring the guide on the pivot would
         % leave a case that still solves while duplicating slider_crank_tracer.
