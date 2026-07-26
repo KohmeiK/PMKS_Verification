@@ -1,56 +1,64 @@
 {
   "cases": {
     "angled_slider_crank": {
-      "matlab_source_content_sha256": "a6f3274cb9d679a2e63d06ffca341de08428313fc9edab32ddc8683405b3a73f",
-      "pmks_adapter_content_sha256": "d90239ce5c4dc3adaaf906ae5ff0433f3467578e3b1c82f889ce0e6f90a7ce78",
+      "matlab_source_content_sha256": "b03e657b42b2020b849c53f51c4766d3dd58778fbc49d40ced704ce0667efc25",
+      "pmks_adapter_content_sha256": "858ccc8d52479fad9f60da4d809f8973e7f84b46a7428167c2df33adf37625ef",
+      "pmks_fork_patch_sha256": "2efa0c156bd8acaa83f104738c841046eb46e1a19e8414044c1992753fbe2c6b",
+      "pmks_source_content_sha256": "b11a84f6a4cc1d2bc5cf17a2849d498c9a130b93e5f697970da4f73923b00c51",
+      "pmks_source_tree_git": "331d0e4cdfbe9f728ad65183f365552d0ba78b73",
+      "pmks_upstream_base_tree_git": "cd6b654909094e05b0938f863c3b6f3d1ae166a6"
+    },
+    "offset_slider_crank": {
+      "matlab_source_content_sha256": "d6bea58c203bc90c1c6b3f00629056b4e3f2b99436e23735ec59785890170477",
+      "pmks_adapter_content_sha256": "858ccc8d52479fad9f60da4d809f8973e7f84b46a7428167c2df33adf37625ef",
       "pmks_fork_patch_sha256": "2efa0c156bd8acaa83f104738c841046eb46e1a19e8414044c1992753fbe2c6b",
       "pmks_source_content_sha256": "b11a84f6a4cc1d2bc5cf17a2849d498c9a130b93e5f697970da4f73923b00c51",
       "pmks_source_tree_git": "331d0e4cdfbe9f728ad65183f365552d0ba78b73",
       "pmks_upstream_base_tree_git": "cd6b654909094e05b0938f863c3b6f3d1ae166a6"
     },
     "slider_crank_tracer": {
-      "matlab_source_content_sha256": "b1210d38057644f7c1498400e98ed8e0fb60d57b17d66ea20e9c8498515f8079",
-      "pmks_adapter_content_sha256": "d90239ce5c4dc3adaaf906ae5ff0433f3467578e3b1c82f889ce0e6f90a7ce78",
+      "matlab_source_content_sha256": "07bbb32c85db8138ae73ec1bcfafbf42b6d71e5a810156a453656e48c039c02d",
+      "pmks_adapter_content_sha256": "858ccc8d52479fad9f60da4d809f8973e7f84b46a7428167c2df33adf37625ef",
       "pmks_fork_patch_sha256": "2efa0c156bd8acaa83f104738c841046eb46e1a19e8414044c1992753fbe2c6b",
       "pmks_source_content_sha256": "b11a84f6a4cc1d2bc5cf17a2849d498c9a130b93e5f697970da4f73923b00c51",
       "pmks_source_tree_git": "331d0e4cdfbe9f728ad65183f365552d0ba78b73",
       "pmks_upstream_base_tree_git": "cd6b654909094e05b0938f863c3b6f3d1ae166a6"
     },
     "steep_slider_crank": {
-      "matlab_source_content_sha256": "a20fce758a8419bfa80d87205fe997fa295fa9ef97ccdc4abf49b9d31726853b",
-      "pmks_adapter_content_sha256": "d90239ce5c4dc3adaaf906ae5ff0433f3467578e3b1c82f889ce0e6f90a7ce78",
+      "matlab_source_content_sha256": "ac156dbb76e924a4a550da65de496caaef8025690f24db674c50bd32f7eb4c30",
+      "pmks_adapter_content_sha256": "858ccc8d52479fad9f60da4d809f8973e7f84b46a7428167c2df33adf37625ef",
       "pmks_fork_patch_sha256": "2efa0c156bd8acaa83f104738c841046eb46e1a19e8414044c1992753fbe2c6b",
       "pmks_source_content_sha256": "b11a84f6a4cc1d2bc5cf17a2849d498c9a130b93e5f697970da4f73923b00c51",
       "pmks_source_tree_git": "331d0e4cdfbe9f728ad65183f365552d0ba78b73",
       "pmks_upstream_base_tree_git": "cd6b654909094e05b0938f863c3b6f3d1ae166a6"
     },
     "stephenson_iii_example_2": {
-      "matlab_source_content_sha256": "d902877c5f36b8d3f2d8fb24f9605ab3bbfbbb935ad75e80f154d6fabacbcc63",
-      "pmks_adapter_content_sha256": "d90239ce5c4dc3adaaf906ae5ff0433f3467578e3b1c82f889ce0e6f90a7ce78",
+      "matlab_source_content_sha256": "7667ff0931c0509af75600360e43dec78cd97b663146244252e1560e3a1fef75",
+      "pmks_adapter_content_sha256": "858ccc8d52479fad9f60da4d809f8973e7f84b46a7428167c2df33adf37625ef",
       "pmks_fork_patch_sha256": "2efa0c156bd8acaa83f104738c841046eb46e1a19e8414044c1992753fbe2c6b",
       "pmks_source_content_sha256": "b11a84f6a4cc1d2bc5cf17a2849d498c9a130b93e5f697970da4f73923b00c51",
       "pmks_source_tree_git": "331d0e4cdfbe9f728ad65183f365552d0ba78b73",
       "pmks_upstream_base_tree_git": "cd6b654909094e05b0938f863c3b6f3d1ae166a6"
     },
     "teaching_four_bar": {
-      "matlab_source_content_sha256": "198610715ab9cc2d0b6cb73d5a8e78d2b7099a0e60e9cf077214f6196f8aa981",
-      "pmks_adapter_content_sha256": "d90239ce5c4dc3adaaf906ae5ff0433f3467578e3b1c82f889ce0e6f90a7ce78",
+      "matlab_source_content_sha256": "2f40f0056b3bb89fa9bd2e957cb22e4de10a289f9f79982fbf6d422ed6d22c0c",
+      "pmks_adapter_content_sha256": "858ccc8d52479fad9f60da4d809f8973e7f84b46a7428167c2df33adf37625ef",
       "pmks_fork_patch_sha256": "2efa0c156bd8acaa83f104738c841046eb46e1a19e8414044c1992753fbe2c6b",
       "pmks_source_content_sha256": "b11a84f6a4cc1d2bc5cf17a2849d498c9a130b93e5f697970da4f73923b00c51",
       "pmks_source_tree_git": "331d0e4cdfbe9f728ad65183f365552d0ba78b73",
       "pmks_upstream_base_tree_git": "cd6b654909094e05b0938f863c3b6f3d1ae166a6"
     },
     "teaching_slider_crank": {
-      "matlab_source_content_sha256": "61da6dfec66a2e68f6ea361facb053e6b95ab110cf39c25468d599bd9acdab64",
-      "pmks_adapter_content_sha256": "d90239ce5c4dc3adaaf906ae5ff0433f3467578e3b1c82f889ce0e6f90a7ce78",
+      "matlab_source_content_sha256": "3b069efb15e4fcff6a907f3598af8aad0e01f7ee59924bd655c7b78cd006917c",
+      "pmks_adapter_content_sha256": "858ccc8d52479fad9f60da4d809f8973e7f84b46a7428167c2df33adf37625ef",
       "pmks_fork_patch_sha256": "2efa0c156bd8acaa83f104738c841046eb46e1a19e8414044c1992753fbe2c6b",
       "pmks_source_content_sha256": "b11a84f6a4cc1d2bc5cf17a2849d498c9a130b93e5f697970da4f73923b00c51",
       "pmks_source_tree_git": "331d0e4cdfbe9f728ad65183f365552d0ba78b73",
       "pmks_upstream_base_tree_git": "cd6b654909094e05b0938f863c3b6f3d1ae166a6"
     },
     "watt_i": {
-      "matlab_source_content_sha256": "0515993805c8a4bbf13984d64419864b9dc3e319b0f3f53a2c03a6ccd78bd69c",
-      "pmks_adapter_content_sha256": "d90239ce5c4dc3adaaf906ae5ff0433f3467578e3b1c82f889ce0e6f90a7ce78",
+      "matlab_source_content_sha256": "dedb0aa102322bde76356d7f5bdffcd586ae5c897fb5fe46ea56d6919ce2d231",
+      "pmks_adapter_content_sha256": "858ccc8d52479fad9f60da4d809f8973e7f84b46a7428167c2df33adf37625ef",
       "pmks_fork_patch_sha256": "2efa0c156bd8acaa83f104738c841046eb46e1a19e8414044c1992753fbe2c6b",
       "pmks_source_content_sha256": "b11a84f6a4cc1d2bc5cf17a2849d498c9a130b93e5f697970da4f73923b00c51",
       "pmks_source_tree_git": "331d0e4cdfbe9f728ad65183f365552d0ba78b73",
