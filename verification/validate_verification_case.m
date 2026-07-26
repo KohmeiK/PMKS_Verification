@@ -112,6 +112,20 @@ switch config.name
                 'Slider tracer velocity or acceleration regressed to zero.');
         end
 
+    case 'offset_slider_crank'
+        % The offset is the whole point. Centring the guide on the pivot would
+        % leave a case that still solves while duplicating slider_crank_tracer.
+        travel = Mechanism.Joint.C(:, 1);
+        stroke = max(travel) - min(travel);
+        centre = (max(travel) + min(travel)) / 2;
+        if abs(max(abs(Mechanism.Joint.C(:, 2) - 3))) > 1e-6
+            error('Verification:OffsetGuideRegression', 'Slider left its offset guide.');
+        end
+        if abs(centre) < stroke
+            error('Verification:OffsetGuideRegression', ...
+                'Stroke is centred on the pivot; the guide offset was lost.');
+        end
+
     case 'steep_slider_crank'
         % The point of this case is a guide steep enough to break a
         % slope-intercept consumer. Flattening it would leave a case that still

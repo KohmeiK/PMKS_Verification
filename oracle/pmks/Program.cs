@@ -24,6 +24,7 @@ var manifests = Directory.GetDirectories(options.CasesRoot)
 var expectedCases = new SortedSet<string>(StringComparer.Ordinal)
 {
     "angled_slider_crank",
+    "offset_slider_crank",
     "slider_crank_tracer",
     "steep_slider_crank",
     "stephenson_iii_example_2",

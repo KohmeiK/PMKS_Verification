@@ -16,6 +16,8 @@ switch char(caseName)
         Mechanism = buildAngledSliderCrank();
     case 'steep_slider_crank'
         Mechanism = buildSteepSliderCrank();
+    case 'offset_slider_crank'
+        Mechanism = buildOffsetSliderCrank();
     otherwise
         error('Verification:UnknownCase', 'Unknown verification case: %s', caseName);
 end
@@ -184,6 +186,28 @@ A = place([0; 0]);
 B = place([4; 2]);
 C = place([12; 0]);
 D = place([20; 2]);
+
+Mechanism = baseMechanism(struct('A', A, 'B', B, 'C', C));
+Mechanism.TracerPoint = struct('D', D);
+Mechanism.LinkCoM.AB = GeneralUtils.determineCoM([A; B]);
+Mechanism.LinkCoM.BCD = GeneralUtils.determineCoM([B; C; D]);
+Mechanism.Mass = struct('AB', 5, 'BCD', 10, 'Piston', 1);
+Mechanism.MassMoI = struct('AB', 0.1, 'BCD', 0.2);
+Mechanism = addLinkAngles(Mechanism, struct('AB', 'A', 'BCD', 'B'));
+end
+
+function Mechanism = buildOffsetSliderCrank()
+% A slider-crank whose guide does not pass through the crank pivot.
+%
+% Every other v1 slider case is in-line: the guide runs through the pivot, so the
+% two circle-line roots sit symmetrically either side of it and the stroke is
+% centred. Offsetting the guide by 3 units breaks that symmetry - the stroke here
+% runs x = 7.416 to 15.716 - which is the geometry where which root the solver
+% keeps actually distinguishes two different mechanisms.
+A = [0, 0, 0];
+B = [0, 4.0, 0];
+C = [11.958260743101398, 3.0, 0];
+D = [6.0, 7.0, 0];
 
 Mechanism = baseMechanism(struct('A', A, 'B', B, 'C', C));
 Mechanism.TracerPoint = struct('D', D);

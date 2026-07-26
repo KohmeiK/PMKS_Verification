@@ -26,6 +26,7 @@ SOURCE_DIRECTORIES = {
     "slider_crank_tracer": Path("Mechanisms/Four_Bar_Slider/Slider_Crank_Tracer_Point"),
     "angled_slider_crank": Path("Mechanisms/Four_Bar_Slider/Angled_Slider_Crank"),
     "steep_slider_crank": Path("Mechanisms/Four_Bar_Slider/Steep_Slider_Crank"),
+    "offset_slider_crank": Path("Mechanisms/Four_Bar_Slider/Offset_Slider_Crank"),
 }
 
 

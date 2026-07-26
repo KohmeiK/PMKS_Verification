@@ -203,6 +203,7 @@ EXPECTED_CASES = {
     "slider_crank_tracer",
     "angled_slider_crank",
     "steep_slider_crank",
+    "offset_slider_crank",
 }
 
 

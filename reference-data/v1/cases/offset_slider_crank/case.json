@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "case_id": "offset_slider_crank",
+  "title": "Slider-crank with a guide offset from the crank pivot",
+  "units": {
+    "length": "m",
+    "time": "s",
+    "angle": "rad",
+    "mass": "kg",
+    "force": "N"
+  },
+  "characteristic_length": 16,
+  "topology": {
+    "joints": [
+      {
+        "id": "A",
+        "type": "R",
+        "links": [
+          "ground",
+          "AB"
+        ],
+        "initial": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "id": "B",
+        "type": "R",
+        "links": [
+          "AB",
+          "BCD"
+        ],
+        "initial": [
+          0.0,
+          4.0
+        ]
+      },
+      {
+        "id": "C",
+        "type": "P",
+        "links": [
+          "BCD",
+          "ground"
+        ],
+        "initial": [
+          11.958260743101398,
+          3.0
+        ],
+        "guide_axis": [
+          1,
+          0
+        ]
+      }
+    ],
+    "points": [
+      {
+        "id": "D",
+        "link": "BCD",
+        "initial": [
+          6.0,
+          7.0
+        ]
+      }
+    ],
+    "links": [
+      {
+        "id": "AB",
+        "joints": [
+          "A",
+          "B"
+        ],
+        "angle_basis": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "id": "BCD",
+        "joints": [
+          "B",
+          "C"
+        ],
+        "angle_basis": [
+          "B",
+          "C"
+        ]
+      }
+    ],
+    "independent_loops": [
+      [
+        "A",
+        "B",
+        "C"
+      ]
+    ]
+  },
+  "input": {
+    "joint": "A",
+    "link": "AB",
+    "rpm": 10,
+    "speed_rad_s": 1.0471975511965976,
+    "angle_increment_rad": 0.017453292519943295,
+    "expected_sweeps": [
+      {
+        "direction": 1,
+        "rows": 360
+      },
+      {
+        "direction": 1,
+        "rows": 1,
+        "cycle_endpoint": true
+      }
+    ]
+  },
+  "jacobian": {
+    "unknown_joints": [
+      "C"
+    ],
+    "length_constraints": [
+      [
+        "B",
+        "C"
+      ]
+    ],
+    "guide_constraints": [
+      {
+        "joint": "C",
+        "axis": [
+          1,
+          0
+        ]
+      }
+    ],
+    "singular_condition_threshold": 10000000000
+  },
+  "mass_properties": {
+    "AB": {
+      "mass": 5,
+      "inertia": 0.1,
+      "com_initial": [
+        0.0,
+        2.0
+      ]
+    },
+    "BCD": {
+      "mass": 10,
+      "inertia": 0.2,
+      "com_initial": [
+        5.9860869143671325,
+        4.666666666666667
+      ]
+    }
+  },
+  "capabilities": {
+    "joints": true,
+    "points": true,
+    "com": true,
+    "links": true,
+    "prismatic": true,
+    "dynamics": false,
+    "motiongen": false
+  },
+  "trust": {
+    "kinematics": "matlab-pmks-fork",
+    "com": "matlab-pmks-fork",
+    "dynamics": "not-applicable",
+    "motiongen": "not-applicable"
+  },
+  "exclusions": []
+}
