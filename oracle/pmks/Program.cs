@@ -25,6 +25,7 @@ var expectedCases = new SortedSet<string>(StringComparer.Ordinal)
 {
     "angled_slider_crank",
     "slider_crank_tracer",
+    "steep_slider_crank",
     "stephenson_iii_example_2",
     "teaching_four_bar",
     "teaching_slider_crank",

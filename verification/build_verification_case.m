@@ -14,6 +14,8 @@ switch char(caseName)
         Mechanism = buildSliderCrankTracer();
     case 'angled_slider_crank'
         Mechanism = buildAngledSliderCrank();
+    case 'steep_slider_crank'
+        Mechanism = buildSteepSliderCrank();
     otherwise
         error('Verification:UnknownCase', 'Unknown verification case: %s', caseName);
 end
@@ -148,6 +150,33 @@ function Mechanism = buildAngledSliderCrank()
 % already known to close keeps the linkage well conditioned, so any disagreement
 % is attributable to the guide orientation rather than to a new mechanism.
 guide = deg2rad(30);
+rotation = [cos(guide), -sin(guide); sin(guide), cos(guide)];
+place = @(point) [(rotation * point(:))', 0];
+
+A = place([0; 0]);
+B = place([4; 2]);
+C = place([12; 0]);
+D = place([20; 2]);
+
+Mechanism = baseMechanism(struct('A', A, 'B', B, 'C', C));
+Mechanism.TracerPoint = struct('D', D);
+Mechanism.LinkCoM.AB = GeneralUtils.determineCoM([A; B]);
+Mechanism.LinkCoM.BCD = GeneralUtils.determineCoM([B; C; D]);
+Mechanism.Mass = struct('AB', 5, 'BCD', 10, 'Piston', 1);
+Mechanism.MassMoI = struct('AB', 0.1, 'BCD', 0.2);
+Mechanism = addLinkAngles(Mechanism, struct('AB', 'A', 'BCD', 'B'));
+end
+
+function Mechanism = buildSteepSliderCrank()
+% The same slider-crank tracer geometry on a guide 0.05 degrees off vertical.
+%
+% angled_slider_crank covers a guide that is merely not axis-aligned. This one
+% covers a guide steep enough to break a slope-intercept consumer: PMKSWeb clamped
+% any slope above 1000 and fell back to holding x constant, which is correct only
+% when the guide is exactly vertical. tan(89.95 deg) is 1145.9, just inside that
+% band. MATLAB solves it cleanly - the guide passes through the origin, so the
+% intercept stays at machine zero.
+guide = deg2rad(89.95);
 rotation = [cos(guide), -sin(guide); sin(guide), cos(guide)];
 place = @(point) [(rotation * point(:))', 0];
 

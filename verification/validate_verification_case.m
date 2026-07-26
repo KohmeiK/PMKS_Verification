@@ -112,6 +112,23 @@ switch config.name
                 'Slider tracer velocity or acceleration regressed to zero.');
         end
 
+    case 'steep_slider_crank'
+        % The point of this case is a guide steep enough to break a
+        % slope-intercept consumer. Flattening it would leave a case that still
+        % solves while covering nothing angled_slider_crank does not.
+        guide = deg2rad(89.95);
+        travel = Mechanism.Joint.C(:, 1:2) - Mechanism.Joint.C(1, 1:2);
+        offGuide = travel * [-sin(guide); cos(guide)];
+        along = travel * [cos(guide); sin(guide)];
+        if max(abs(offGuide)) > 1e-6
+            error('Verification:SteepGuideRegression', ...
+                'Slider left its steep guide by %g.', max(abs(offGuide)));
+        end
+        if max(abs(along)) <= 1e-6
+            error('Verification:SteepGuideRegression', ...
+                'Slider did not travel along its guide.');
+        end
+
     case 'angled_slider_crank'
         % The entire point of this case is that the guide is not axis-aligned. If
         % someone quietly reverts the guide angle to 0 it still solves, still
