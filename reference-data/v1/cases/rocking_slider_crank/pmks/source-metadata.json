@@ -10,10 +10,10 @@
   "repeatability_relative_tolerance": 8e-12,
   "runs": {
     "negative": {
-      "canonical_rows": 11
+      "canonical_rows": 277
     },
     "positive": {
-      "canonical_rows": 11
+      "canonical_rows": 277
     }
   },
   "schema_version": 1,
