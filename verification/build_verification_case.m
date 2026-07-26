@@ -12,6 +12,8 @@ switch char(caseName)
         Mechanism = buildTeachingSliderCrank();
     case 'slider_crank_tracer'
         Mechanism = buildSliderCrankTracer();
+    case 'angled_slider_crank'
+        Mechanism = buildAngledSliderCrank();
     otherwise
         error('Verification:UnknownCase', 'Unknown verification case: %s', caseName);
 end
@@ -135,4 +137,30 @@ end
 
 function value = angleVector(point, anchor)
 value = [0, 0, rad2deg(atan2(point(2) - anchor(2), point(1) - anchor(1)))];
+end
+
+function Mechanism = buildAngledSliderCrank()
+% The slider-crank tracer geometry, rigidly rotated onto a 30 degree guide.
+%
+% Every other v1 slider case runs on a horizontal track, so nothing covered a
+% guide that is not axis-aligned - which is exactly the path a slope-intercept
+% circle-line solve gets wrong as the track steepens. Rotating a geometry that is
+% already known to close keeps the linkage well conditioned, so any disagreement
+% is attributable to the guide orientation rather than to a new mechanism.
+guide = deg2rad(30);
+rotation = [cos(guide), -sin(guide); sin(guide), cos(guide)];
+place = @(point) [(rotation * point(:))', 0];
+
+A = place([0; 0]);
+B = place([4; 2]);
+C = place([12; 0]);
+D = place([20; 2]);
+
+Mechanism = baseMechanism(struct('A', A, 'B', B, 'C', C));
+Mechanism.TracerPoint = struct('D', D);
+Mechanism.LinkCoM.AB = GeneralUtils.determineCoM([A; B]);
+Mechanism.LinkCoM.BCD = GeneralUtils.determineCoM([B; C; D]);
+Mechanism.Mass = struct('AB', 5, 'BCD', 10, 'Piston', 1);
+Mechanism.MassMoI = struct('AB', 0.1, 'BCD', 0.2);
+Mechanism = addLinkAngles(Mechanism, struct('AB', 'A', 'BCD', 'B'));
 end

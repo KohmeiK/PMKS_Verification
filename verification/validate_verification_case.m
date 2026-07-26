@@ -111,6 +111,24 @@ switch config.name
             error('Verification:TracerDerivativeRegression', ...
                 'Slider tracer velocity or acceleration regressed to zero.');
         end
+
+    case 'angled_slider_crank'
+        % The entire point of this case is that the guide is not axis-aligned. If
+        % someone quietly reverts the guide angle to 0 it still solves, still
+        % closes, and silently stops covering anything the horizontal cases do not.
+        guide = deg2rad(30);
+        normalDirection = [-sin(guide), cos(guide)];
+        travel = Mechanism.Joint.C(:, 1:2) - Mechanism.Joint.C(1, 1:2);
+        along = travel * [cos(guide); sin(guide)];
+        offGuide = travel * normalDirection';
+        if max(abs(offGuide)) > 1e-6
+            error('Verification:AngledGuideRegression', ...
+                'Slider left its 30 degree guide by %g.', max(abs(offGuide)));
+        end
+        if max(abs(along)) <= 1e-6
+            error('Verification:AngledGuideRegression', ...
+                'Slider did not travel along its guide.');
+        end
 end
 
 if any(diff(sign(Mechanism.inputSpeed(:, 1))) ~= 0)
